@@ -1,37 +1,37 @@
-// get arguments from command line
-const args = Array.prototype.slice.call(process.argv, 2);
-// if not enough aruguments print and exit
-if (args.length < 3) {
-  console.error();('ERROR: Improper number of arguments.');
-  console.log('Please make sure you have the required arguments: Drug Name, units, \
-  target dose without units, at least one vial size without units with price (delinated with \'/\')');
-  console.log('Example: node calculateWaste.js myDrug mg 1000 200/4.35');
-  process.exit();
-}
-// set variables for function
-const drugName = args[0];
-
-const targetDose = args[1] * 1;
-
-// create array of objects from vials arguments
-const vialSizes = args.slice(2).map((item) => {
-  // if improper format notify and EXIT PROGRAM
-  if (item.indexOf('/') === -1 || (item.indexOf('/') !== item.lastIndexOf('/'))) {
-    console.error(`ERROR: argument '${item}' is not formatted properly.`);
-    console.log('Please make sure that you use the following format <numerical vial size>/<vial price>');
-    console.log('Example: 1240/923.40');
-    process.exit();
-  }
-  const vial = createVialObject(item);
-
-  return vial; // return Object
-});
-
-// call calculation function
-compareWaste(vialSizes);
+// // get arguments from command line
+// const args = Array.prototype.slice.call(process.argv, 2);
+// // if not enough aruguments print and exit
+// if (args.length < 3) {
+//   console.error();('ERROR: Improper number of arguments.');
+//   console.log('Please make sure you have the required arguments: Drug Name, units, \
+//   target dose without units, at least one vial size without units with price (delinated with \'/\')');
+//   console.log('Example: node calculateWaste.js myDrug mg 1000 200/4.35');
+//   process.exit();
+// }
+// // set variables for function
+// const drugName = args[0];
+//
+// const targetDose = args[1] * 1;
+//
+// // create array of objects from vials arguments
+// const vialSizes = args.slice(2).map((item) => {
+//   // if improper format notify and EXIT PROGRAM
+//   if (item.indexOf('/') === -1 || (item.indexOf('/') !== item.lastIndexOf('/'))) {
+//     console.error(`ERROR: argument '${item}' is not formatted properly.`);
+//     console.log('Please make sure that you use the following format <numerical vial size>/<vial price>');
+//     console.log('Example: 1240/923.40');
+//     process.exit();
+//   }
+//   const vial = createVialObject(item, targetDose);
+//
+//   return vial; // return Object
+// });
+//
+// // call calculation function
+// compareWaste(vialSizes);
 
 /* helper function declarations */
-function createVialObject(sizePriceString) {
+function createVialObject(sizePriceString, targetDose) {
   const values = sizePriceString.split("/");
   let vial = {};
   vial.size = values[0] * 1;
@@ -51,9 +51,21 @@ function createVialObject(sizePriceString) {
   return vial;
 }
 
-// function to create combinations of vials
-function generateCombinations(vialCombinations) {
+// function to create combinations of vials (NEEDS WORK)
+function generateCombinations(vialCombinations, targetDose) {
+  // sort vials highest to lowest
+  const sortedVials = vialCombinations.sort((vial1, vial2) => {
+    return vial1 - vial2;
+  });
+  // iterate through vials
 
+  for (let i = 0; i < sortedVials.length; i++) {
+    // try to get as close to vial
+    // go through all the vials after starting vials
+    for (let j = i + 1; j < sortedVials; j++) {
+
+    }
+  }
 }
 
 function findVialsWithMinWaste(vialCombinations) {
@@ -155,7 +167,9 @@ function compareWaste(vialSizes) {
   }
 }
 
-
+module.exports = {
+  createVialObject,
+}
 // notes for optimal size algorithm (for Refactor)
 // AWAIT JADES advice for
 
