@@ -1,8 +1,8 @@
- // get arguments from command line
+// get arguments from command line
 const args = Array.prototype.slice.call(process.argv, 2);
 // if not enough aruguments print and exit
 if (args.length < 3) {
-  console.log('ERROR: Improper number of arguments.');
+  console.error();('ERROR: Improper number of arguments.');
   console.log('Please make sure you have the required arguments: Drug Name, units, \
   target dose without units, at least one vial size without units with price (delinated with \'/\')');
   console.log('Example: node calculateWaste.js myDrug mg 1000 200/4.35');
@@ -17,16 +17,31 @@ const targetDose = args[1] * 1;
 const vialSizes = args.slice(2).map((item) => {
   // if improper format notify and EXIT PROGRAM
   if (item.indexOf('/') === -1 || (item.indexOf('/') !== item.lastIndexOf('/'))) {
-    console.log(`ERROR: argument '${item}' is not formatted properly.`);
+    console.error(`ERROR: argument '${item}' is not formatted properly.`);
     console.log('Please make sure that you use the following format <numerical vial size>/<vial price>');
     console.log('Example: 1240/923.40');
     process.exit();
   }
+  const vial = createVialObject(item);
 
-  const values = item.split("/");
+  return vial; // return Object
+});
+
+// call calculation function
+compareWaste(vialSizes);
+
+
+
+function parseVialSizeArgs(vialStringsArr) {
+
+}
+/* helper function declarations */
+function createVialObject(sizePriceString) {
+  const values = sizePriceString.split("/");
   let vial = {};
   vial.size = values[0] * 1;
   vial.price = values[1] * 1;
+  if (typeof vial.size === '')
   vial.waste = targetDose % vial.size;
   // if no waste vials used are equal else round up for need
   if (vial.waste === 0) {
@@ -38,15 +53,59 @@ const vialSizes = args.slice(2).map((item) => {
   vial.totalCost = vial.vialsUsed * vial.price;
   vial.wasteCost = (vial.waste / vial.size) * vial.price;
   // split on '/'
-
-//console.log(vial);
   return vial;
-});
+}
 
-// call calculation function
-compareWaste(vialSizes);
+// function to create combinations of vials
+function generateCombinations(vialCombinations) {
 
-// method for figurinng out which of the vials that waste the lease volume waste the least money
+}
+
+function findVialsWithMinWaste(vialCombinations) {
+  let minWasteVial = vialCombinations[0]; // start min at first vial
+  // print information for first item in the sizes
+  //console.log(`The ''${minWasteVial.size} size ${drugName.toUpperCase()}' wastes ${minWasteVial.waste} when attempting a ${targetDose} dose.`);
+
+  // iterate through array to find overall lowest waste amount
+  for (let i = 1; i < vialCombinations.length; i++) {
+    if (vialCombinations[i].waste < minWasteVial.waste) {
+      minWasteVial = vialCombinations[i];
+    }
+  }
+  // return vials that have minimum waste
+  return vialCombinations.filter((vial) => {
+    return vial.waste === vial.waste;
+  });
+}
+
+function findVialsWithMinCost(vialCombinations) {
+  let minCostVial = vialCombinations[0];
+  for (let i = 1; i < vialCombinations.length; i++) {
+    if (vialCombinations[i].totalCost < minCostVial.totalCost) {
+      minCostVial = vialCombinations[i];
+    }
+  }
+
+  return vialCombinations.filter((vial) => {
+    return vial.totalCost === minCostVial.totalCost;
+  });
+}
+
+function findVialsWithMinSize(vialCombinations) {
+  let smallestVial  = minCostVials[0];
+
+  for (let i = 1; k < minCostVials.length; i++) {
+    if (minCostVials[i].size < smallestVial.size) {
+      smallestVial = minCostVials[i];
+    }
+  }
+
+  return minCostVials.filter((vial) => {
+    return vial.size === smallestVial.size;
+  });
+}
+
+// function for figurinng out which of the vials that waste the lease volume waste the least money
 function compareWaste(vialSizes) {
   let minWasteVial = vialSizes[0]; // start min at first vial
   // print information for first item in the sizes
@@ -59,7 +118,7 @@ function compareWaste(vialSizes) {
     }
   }
   // filterByVial Sizes
-  let minWasteVials = vialSizes.filter((vial) => {
+  const minWasteVials = vialSizes.filter((vial) => {
     return vial.waste === vial.waste;
   });
 
@@ -73,20 +132,32 @@ function compareWaste(vialSizes) {
       }
     }
 
-    let minCostVials = minWasteVials.filter((vial) => {
+    const minCostVials = minWasteVials.filter((vial) => {
       return vial.totalCost === minCostVial.totalCost;
     });
 
     if (minCostVials.length === 1) {
-      console.log('BEST VIAL: ', minCostVials[0]);
+      console.log('BEST VIAL:', minCostVials[0]);
     } else {
-      console.log('BEST VIALS: ');
-      for (let k = 0; k < minCostVials.length; k++) {
-        console.log(minCostVials[k] + '\n');
+      // find smallest vialSizes
+      let smallestVial  = minCostVials[0];
+
+      for (let k = 1; k < minCostVials.length; k++) {
+        if (minCostVials[k].size < smallestVial.size) {
+          smallestVial = minCostVials[k];
+        }
       }
+
+      const smallestVials = minCostVials.filter((vial) => {
+        return vial.size === smallestVial.size;
+      });
+
+      console.log('BEST VIAL(S):');
+      smallestVials.forEach((vial) => {
+        console.log(vial);
+      });
     }
   }
-
 }
 
 
@@ -125,3 +196,6 @@ function compareWaste(vialSizes) {
 // other notes
 // - for money it may be neccesary to create a money class for to avoid minor errors in clauclation
 // - alternatively, there's probably an npm package
+
+
+// combinations of vials
