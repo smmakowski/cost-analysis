@@ -1,0 +1,5 @@
+# File System Settings
+.DS_Store
+
+# node_modules and package lock files
+node_modules/

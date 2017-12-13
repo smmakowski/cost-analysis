@@ -1,0 +1,19 @@
+{
+  "name": "cost-analysis",
+  "version": "1.0.0",
+  "description": "Program that determines optimal combination of vial sizes for medication with decending priorities of: (waste => cost => vials used)",
+  "main": "calculateWaste.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smmakowski/cost-analysis.git"
+  },
+  "author": "Stephen Makowski",
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/smmakowski/cost-analysis/issues"
+  },
+  "homepage": "https://github.com/smmakowski/cost-analysis#readme"
+}
