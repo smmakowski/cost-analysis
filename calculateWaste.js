@@ -30,11 +30,6 @@ const vialSizes = args.slice(2).map((item) => {
 // call calculation function
 compareWaste(vialSizes);
 
-
-
-function parseVialSizeArgs(vialStringsArr) {
-
-}
 /* helper function declarations */
 function createVialObject(sizePriceString) {
   const values = sizePriceString.split("/");

@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/smmakowski/cost-analysis/issues"
   },
-  "homepage": "https://github.com/smmakowski/cost-analysis#readme"
+  "homepage": "https://github.com/smmakowski/cost-analysis#readme",
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
 }
