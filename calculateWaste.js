@@ -13,7 +13,8 @@ const drugName = args[0];
 
 const targetDose = args[1] * 1;
 
-const vialSizes = args.slice(2).map(function(item) { // maybe do the object creation here
+// create array of objects from vials arguments
+const vialSizes = args.slice(2).map((item) => {
   // if improper format notify and EXIT PROGRAM
   if (item.indexOf('/') === -1 || (item.indexOf('/') !== item.lastIndexOf('/'))) {
     console.log(`ERROR: argument '${item}' is not formatted properly.`);
@@ -38,33 +39,54 @@ const vialSizes = args.slice(2).map(function(item) { // maybe do the object crea
   vial.wasteCost = (vial.waste / vial.size) * vial.price;
   // split on '/'
 
-  console.log(vial);
+//console.log(vial);
   return vial;
 });
-// call calculation
-//compareWaste(drugName, targetDose, vialSizes);
 
-function compareWaste(drugName, targetDose, vialSizes) {
-  let minSize = vialSizes[0];
-  let minWaste = targetDose % vialSizes[0];
+// call calculation function
+compareWaste(vialSizes);
+
+// method for figurinng out which of the vials that waste the lease volume waste the least money
+function compareWaste(vialSizes) {
+  let minWasteVial = vialSizes[0]; // start min at first vial
   // print information for first item in the sizes
-  console.log(`The ''${minSize} size ${drugName.toUpperCase()}' wastes ${minWaste} when attempting a ${targetDose} dose.`);
+  //console.log(`The ''${minWasteVial.size} size ${drugName.toUpperCase()}' wastes ${minWasteVial.waste} when attempting a ${targetDose} dose.`);
 
   // iterate through array to find overall lowest waste amount
   for (let i = 1; i < vialSizes.length; i++) {
-    //calculate
-    let currSize = vialSizes[i];
-    let currWaste = targetDose % vialSizes[i];
-    console.log(`The ''${currSize} size ${drugName.toUpperCase()}' wastes ${currWaste} when attempting a ${targetDose} dose.`);
+    if (vialSizes[i].waste < minWasteVial.waste) {
+      minWasteVial = vialSizes[i];
+    }
+  }
+  // filterByVial Sizes
+  let minWasteVials = vialSizes.filter((vial) => {
+    return vial.waste === vial.waste;
+  });
 
-    if (currWaste < minWaste) {
-      minWaste = currWaste;
-      minSize = currSize;
+  if (minWasteVials.length === 1) {
+    console.log('BEST VIAL:', minWasteVials[0]);
+  } else {
+    let minCostVial = minWasteVials[0];
+    for (let j = 1; j < minWasteVials.length; j++) {
+      if (minWasteVials[j].totalCost < minCostVial.totalCost) {
+        minCostVial = minWasteVials[j];
+      }
+    }
+
+    let minCostVials = minWasteVials.filter((vial) => {
+      return vial.totalCost === minCostVial.totalCost;
+    });
+
+    if (minCostVials.length === 1) {
+      console.log('BEST VIAL: ', minCostVials[0]);
+    } else {
+      console.log('BEST VIALS: ');
+      for (let k = 0; k < minCostVials.length; k++) {
+        console.log(minCostVials[k] + '\n');
+      }
     }
   }
 
-
-  console.log(`The size that wastes the least is the ${minSize}, which wastes ${minWaste}, when taking a dose of ${targetDose}.`);
 }
 
 
