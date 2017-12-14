@@ -16,6 +16,7 @@ describe('calulateWaste.js', function() {
     it('should have proper values', function() {
       expect(resultVial.size).to.be.a('number');
       expect(resultVial.size).to.equal(250);
+      expect(resultVial.price).to.be.a('number');
       expect(resultVial.price).to.equal(500.00);
     });
   });

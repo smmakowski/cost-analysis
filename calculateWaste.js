@@ -1,3 +1,5 @@
+//NOTE: DO NOT DELETE THE BELOW COMMENT AS THIS IS THE MAIN program
+
 // // get arguments from command line
 // const args = Array.prototype.slice.call(process.argv, 2);
 // // if not enough aruguments print and exit
@@ -26,9 +28,18 @@
 //
 //   return vial; // return Object
 // });
-//
-// // call calculation function
+
+// call calculation function
 // compareWaste(vialSizes);
+
+let vial1 = createVialObject("180/2175.22", 1000);
+let vial2 = createVialObject("260/3483.19", 1000);
+let vial3 = createVialObject("160/1990.89", 1000);
+let vial4 = createVialObject("210/1222.91", 1000);
+let vial5 = createVialObject("140/2002.81", 1000);
+
+let vialArr1 = [vial1, vial2, vial3, vial4, vial5];
+generateCombinations(vialArr1, 1000);
 
 /* helper function declarations */
 function createVialObject(sizePriceString, targetDose) {
@@ -36,7 +47,6 @@ function createVialObject(sizePriceString, targetDose) {
   let vial = {};
   vial.size = values[0] * 1;
   vial.price = values[1] * 1;
-  if (typeof vial.size === '')
   vial.waste = targetDose % vial.size;
   // if no waste vials used are equal else round up for need
   if (vial.waste === 0) {
@@ -54,18 +64,77 @@ function createVialObject(sizePriceString, targetDose) {
 // function to create combinations of vials (NEEDS WORK)
 function generateCombinations(vialCombinations, targetDose) {
   // sort vials highest to lowest
+  let combinations = [];
+
   const sortedVials = vialCombinations.sort((vial1, vial2) => {
-    return vial1 - vial2;
-  });
+    return vial1.size - vial2.size;
+  }).reverse();
+  console.log(sortedVials)
   // iterate through vials
-
-  for (let i = 0; i < sortedVials.length; i++) {
-    // try to get as close to vial
-    // go through all the vials after starting vials
-    for (let j = i + 1; j < sortedVials; j++) {
-
+  // for each of the vials
+  sortedVials.forEach((startVial, idx, arr) => {
+    console.log('CURRENT STARTVIAL: ', startVial.size);
+    if (idx === arr.length - 1) {
+      console.log('YOU HAVE HIT THE LAST STARTVIAL, ENDING COMBINATIONS...');
+      return;
     }
-  }
+
+    if (startVial.waste === 0) { // if the vial does not produce waste on it's own then skip it
+      console.log('START VIAL DOES NOT PRODUCE WASTE, GOING TO NEXT START VIAL...');
+      return;
+    }
+
+    // otherwise
+    let vialCounts = {}; //create counts object
+    vialCounts[startVial.size] = Math.floor(targetDose / startVial.size); // try to fill up as much as we can
+    let amountFilled = startVial.size * vialCounts[startVial.size]; // start filled amount with total filled by startVial
+    console.log('STARTING AMOUNT LEFT:', amountFilled);
+    // NOTE: WHAT ABOUT IF THE START VIAL DIVIDES EVENLY, SHOULD I STILL LOOK AT MORE OPTIONS just go on to the next one?
+      // NOTE: Currently will just skip to next one
+
+    for (let i = idx + 1; i < arr.length; i++) { // iterate through rest of sizes;
+      let currVial = arr[i]; // curr vial ref
+
+      let currCount = 0; // declar startCount for current vial
+
+      while (amountFilled < targetDose) { // keep trying to fill the vial with next size down until
+        amountFilled += currVial.size; // add the the vial and increase the count
+        currCount += 1;
+      }
+
+      if (amountFilled === targetDose) { // if amount filled is equal to target Dose
+        // create a combination object and push to combinations and continue
+        console.log('FILLED WITHOUT WASTE WITH COMBINATION');
+        vialCounts[currVial.size] = currCount; // add count to object
+        console.log('finalCounts: ', vialCounts);
+        return; // go on to next startVial size
+      } else if (amountFilled > targetDose && i === arr.length - 1) { // more amount filled is more than target, and adding final size end
+          console.log('FILLED WITH WASTE AND REACHED SMALLEST VIAL SIZE TOTAL: ' + amountFilled);
+          vialCounts[currVial.size] = currCount; // add count to object
+          console.log('FINAL COUNTS FOR COMBO:', vialCounts);
+          // create a vialcombo object and and add to the array
+          combinations.push(vialCounts);
+          return;// skip to next startVial
+          // move on and try to fill thingswill next smallest vial
+      } else { // else if there are still vials left to check
+        console.log('FILLED WITH WASTE BUT CAN SWAP FOR SMALLER VIAL SIZES');
+        console.log('AMOUNT FILLED BEFORE BACKTRACK FOR SIZE ' + currVial.size , amountFilled);
+        console.log('NUMBER OF VIALS USED FOR SIZE ' + currVial.size + ' TO EXCEED AMOUNT FILLED: ', currCount);
+
+        amountFilled -= currVial.size; // subtract one bottle of the most recently used vials
+        currCount -= 1; // take away one of the bottles from the count
+        vialCounts[currVial.size] = currCount; // set current count
+        console.log('MOVING ON TO NEXT VIAl...');
+        console.log('CURRENT COUNTS:', vialCounts);
+      }
+    }
+
+  });
+  console.log('~~~~~FINAL VIAL COUNTS~~~~~');
+  combinations.forEach((combo) => {
+    console.log(combo);
+  });
+  return combinations;
 }
 
 function findVialsWithMinWaste(vialCombinations) {
