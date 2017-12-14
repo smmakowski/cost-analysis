@@ -106,7 +106,8 @@ function generateCombinations(vialCombinations, targetDose) {
         // create a combination object and push to combinations and continue
         console.log('FILLED WITHOUT WASTE WITH COMBINATION');
         vialCounts[currVial.size] = currCount; // add count to object
-        console.log('finalCounts: ', vialCounts);
+        console.log('FINAL COUNTS FOR COMBO:', vialCounts);
+        combinations.push(vialCounts);
         return; // go on to next startVial size
       } else if (amountFilled > targetDose && i === arr.length - 1) { // more amount filled is more than target, and adding final size end
           console.log('FILLED WITH WASTE AND REACHED SMALLEST VIAL SIZE TOTAL: ' + amountFilled);
