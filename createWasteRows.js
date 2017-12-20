@@ -78,7 +78,7 @@ function processData(data) {
         } else if (minWasteVial['sizes']) {
           pricePerMg = 'MultipleSizes! Find Last Size'
           let smallestSize = Math.min(...minWasteVial['sizes']);
-          let priceOfSmallestSize = findPriceInStrArrWithSize(drugFound.sizePrices, minWasteVial.size);
+          let priceOfSmallestSize = findPriceInStrArrWithSize(drugFound.sizePrices, smallestSize);
           pricePerMg = priceOfSmallestSize / smallestSize;
 
         } else {
@@ -97,7 +97,9 @@ function processData(data) {
 
         }
 
-        let resultString = minWasteVial.waste + ',' + pricePerMg +',' + minWasteVial.wasteCost + '\n';
+        let resultString = minWasteVial.waste + ',' + (Math.round(pricePerMg * 100) / 100) +
+        ',' + (Math.round(minWasteVial.wasteCost * 100) / 100) + '\n';
+
         results += resultString;
       } else {
         console.log('LEN of Min was array is=' + minWasteCost.length);
@@ -118,6 +120,7 @@ function processData(data) {
 }
 
 function findPriceInStrArrWithSize(arr, price) {
+  console.log('SEARCHING FOR ' + price + 'IN ARRAY' + arr);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].indexOf(price) === 0) { // if the price is in the string at beginning
       let sizePriceSplit = arr[i].split('/'); // split
