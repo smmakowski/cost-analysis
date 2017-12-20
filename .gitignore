@@ -1,8 +1,19 @@
-
-
 # File System Settings
 .DS_Store
 
 # node_modules and package lock files
 node_modules/
 package-lock.json
+
+# .txt and .csv for
+*.csv
+*.txt
+
+#source files
+*.numbers
+*.xls
+*.xlsx
+*.pdf
+
+#werid files i dont understand
+.swp

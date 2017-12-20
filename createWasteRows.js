@@ -2,25 +2,54 @@ const fs = require('fs');
 const drugPrices = require('./priceData.js');
 const calcWaste = require('./calculateWaste.js');
 
-createFileOfWasteRows(process.argv[2]);
 
+// createFileOfWasteRows(process.argv[2]);
+// createFileOfWasteRows(process.argv[2]);
+//
+// // function createFilesForAllSheets(folderName) {
+// //   fs.readdir(__dirname + '/' + folderName, (err, files) => {
+// //     files.forEach((file) => {
+// //       createFileOfWasteRows(__dirname + '/csv-base-files/' + file);
+// //     });
+// //   });
+// // }
+
+// fs.readFile('./workingDocuments/Jan-Jun2017-analysis.numbers', 'utf8', (err, data) => {
+//   if (err) {
+//     throw err;
+//   }
+//   console.log(data);
+// });
+const files = fs.readdirSync('./csv-base-files');
+files.forEach((file, i) => {
+  if (i !== 0) {
+    const path = './csv-base-files/' + file;
+    console.log('~~~~~~~~THE CURRENT FILE IS '+path +'~~~~~~~~~~~~~~~~~~~~~');
+    createFileOfWasteRows(path);
+  }
+});
 function createFileOfWasteRows(fileName) {
   // read the file
+  let data = fs.readFileSync(fileName, 'utf8');
+  let results = processData(data);
+  fs.writeFileSync('./csv-result-files/' + fileName.slice(17, fileName.length - 4) + '-waste-columns.csv', results,'utf8');
+
+  /*// below is the async version
   fs.readFile(fileName, 'utf8', (err, data) => {
     if (err) {
       throw err;
     }
     // process data
-    results = processData(data);
+    let results = processData(data);
     console.log('RESULTS');
-    console.log(results);
-    fs.writeFile(fileName + '-waste-columns.csv', results, (err) =>{
+    // console.log(results);
+    fs.writeFile(fileName.slice(0, fileName.length - 4) + '-waste-columns.csv', results, (err) =>{
       if (err) {
         throw err;
       }
       console.log('FILE CREATED!');
     });
-  });
+  }); */
 }
 
 function processData(data) {
