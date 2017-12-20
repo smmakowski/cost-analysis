@@ -67,7 +67,7 @@ function createVialObject(sizePriceString, targetDose) {
   vial.totalCost = vial.vialsUsed * vial.price;
   vial.wasteCost = (vial.waste / vial.size) * vial.price;
   // split on '/'
-  console.log('CREATED VIAL: ', vial);
+  //console.log('CREATED VIAL: ', vial);
   return vial;
 }
 
@@ -91,14 +91,14 @@ function generateCombinations(vialCombinations, targetDose) {
 
   // for each of the vials, start with that vial size and try to fill
   sortedVials.forEach((startVial, idx, arr) => {
-    console.log('CURRENT STARTVIAL: ', startVial.size);
+    //console.log('CURRENT STARTVIAL: ', startVial.size);
     if (idx === arr.length - 1) {
-      console.log('YOU HAVE HIT THE LAST STARTVIAL, ENDING COMBINATIONS...');
+      //console.log('YOU HAVE HIT THE LAST STARTVIAL, ENDING COMBINATIONS...');
       return;
     }
 
     if (startVial.waste === 0) { // if the vial does not produce waste on it's own then skip it
-      console.log('START VIAL DOES NOT PRODUCE WASTE, GOING TO NEXT START VIAL...');
+      //console.log('START VIAL DOES NOT PRODUCE WASTE, GOING TO NEXT START VIAL...');
       return;
     }
 
@@ -106,7 +106,7 @@ function generateCombinations(vialCombinations, targetDose) {
     let vialCounts = {}; //create counts object
     vialCounts[startVial.size] = Math.floor(targetDose / startVial.size); // try to fill up as much as we can
     let amountFilled = startVial.size * vialCounts[startVial.size]; // start filled amount with total filled by startVial
-    console.log('STARTING AMOUNT LEFT:', amountFilled);
+    //console.log('STARTING AMOUNT LEFT:', amountFilled);
     // NOTE: WHAT ABOUT IF THE START VIAL DIVIDES EVENLY, SHOULD I STILL LOOK AT MORE OPTIONS just go on to the next one?
       // NOTE: Currently will just skip to next one
 
@@ -122,15 +122,15 @@ function generateCombinations(vialCombinations, targetDose) {
 
       if (amountFilled === targetDose) { // if amount filled is equal to target Dose
         // create a combination object and push to combinations and continue
-        console.log('FILLED WITHOUT WASTE WITH COMBINATION');
+        // console.log('FILLED WITHOUT WASTE WITH COMBINATION');
         vialCounts[currVial.size] = currCount; // add count to object
-        console.log('FINAL COUNTS FOR COMBO:', vialCounts);
+        // console.log('FINAL COUNTS FOR COMBO:', vialCounts);
         combinations.push(vialCounts);
         return; // go on to next startVial size
       } else if (amountFilled > targetDose && i === arr.length - 1) { // more amount filled is more than target, and adding final size end
-          console.log('FILLED WITH WASTE AND REACHED SMALLEST VIAL SIZE TOTAL: ' + amountFilled);
+          // console.log('FILLED WITH WASTE AND REACHED SMALLEST VIAL SIZE TOTAL: ' + amountFilled);
           vialCounts[currVial.size] = currCount; // add count to object
-          console.log('FINAL COUNTS FOR COMBO:', vialCounts);
+          // console.log('FINAL COUNTS FOR COMBO:', vialCounts);
           // create a vialcombo object and and add to the array
           combinations.push(vialCounts);
           return;// skip to next startVial
@@ -157,10 +157,10 @@ function generateCombinations(vialCombinations, targetDose) {
     }
   });
 
-  console.log('~~~~~FINAL VIAL COUNTS~~~~~');
-  combinations.forEach((combo) => {
-    console.log(combo);
-  });
+  // console.log('~~~~~FINAL VIAL COUNTS~~~~~');
+  // combinations.forEach((combo) => {
+  //   console.log(combo);
+  // });
   return combinations; // returns array of combinations to be parsed
 }
 
@@ -188,20 +188,20 @@ function createVialCombinationObject(sizesArr, combo, targetDose) {
     comboObj.vialsUsed = totalCount;
     comboObj.waste = totalUsed - targetDose;
     comboObj.totalCost = totalCost;
-    console.log('SMALLEST VIAL = ', Math.min(...comboObj.sizes));
+    //console.log('SMALLEST VIAL = ', Math.min(...comboObj.sizes));
 
     const smallestSize = Math.min(...comboObj.sizes);
     const pricePerVial = findVialPriceWithSize(sizesArr, smallestSize);
     comboObj.wasteCost = (comboObj.waste / smallestSize) * pricePerVial; // propos
 
-    console.log(comboObj);
+    //console.log(comboObj);
     return comboObj;
 }
 // function to find price of vial sized, targetSize in array of vial objects
 function findVialPriceWithSize(arr, targetSize) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].size === targetSize) {
-      console.log(arr[i])
+      // console.log(arr[i])
       return arr[i].price;
     }
   }
@@ -242,7 +242,7 @@ function findVialsWithMinWasteCost(vialCombinations) {
 function findVialsWithMinSize(vialCombinations) {
   let smallestVial  = minCostVials[0];
 
-  for (let i = 1; k < minCostVials.length; i++) {
+  for (let i = 1; i < minCostVials.length; i++) {
     if (minCostVials[i].size < smallestVial.size) {
       smallestVial = minCostVials[i];
     }
@@ -250,6 +250,49 @@ function findVialsWithMinSize(vialCombinations) {
 
   return minCostVials.filter((vial) => {
     return vial.size === smallestVial.size;
+  });
+}
+
+function findCombosWithLeastVialsUsed(vialCombos) {
+  let leastUsed = vialCombos[0];
+  for (let i = 1; i < vialCombos.length; i++) {
+    if (vialCombos[i].vialsUsed < leastUsed.vialsUsed) {
+      leastUsed = vialCombos[i];
+    }
+  }
+
+  return vialCombos.filter((vial) => {
+    return vial.vialsUsed === leastUsed.vialsUsed;
+  });
+}
+
+function findCombosWithLeastTypesOfVialsUsed(vialCombos) {
+  let leastUsedCombo = vialCombos[0];
+  let leastUsedAmount;
+  if (leastUsedCombo['sizes']) {
+    leastUsedAmount = leastUsedCombo['sizes'].length;
+  } else {
+    leastUsedAmount = 1;
+  }
+
+  for (let i = 1; i < vialCombos.length; i++) {
+    let currUsedAmount;
+    if (vialCombos[i]['sizes']) { // if multiple sizes
+      currUsedAmount = vialCombo[i]['sizes'].length; // set to number of sizes
+    } else {
+      currUsedAmount = 1; // else oly one size was used
+    }
+
+    if (currUsedAmount <  leastUsedAmount) {
+      leastUsedAmount = currUsedAmount;
+    } // compare
+  }
+  return vialCombos.filter((vial) =>{
+    if (vial['sizes']) {
+      return vial['sizes'].length === leastUsedAmount;
+    } else {
+      return 1 === leastUsedAmount;
+    }
   });
 }
 
@@ -264,10 +307,21 @@ function compareWaste(vialSizes, targetDose) {
     return createVialCombinationObject(vialSizes, combo, targetDose);
   });
   comboObjs = comboObjs.concat(vialSizes);
-  console.log('ALL THE COMBOS = ', comboObjs);
 
-  let vialsWithMinWasteCost = findVialsWithMinWasteCost(comboObjs);
-  console.log('VIALS WITH LEAST WASTE COST: ', vialsWithMinWasteCost);
+  //console.log('ALL THE COMBOS = ', comboObjs);
+
+  let bestVials = findVialsWithMinWasteCost(comboObjs);
+  bestVials = findVialsWithMinWaste(bestVials);
+  bestVials = findCombosWithLeastVialsUsed(bestVials);
+  bestVials = findCombosWithLeastTypesOfVialsUsed(bestVials);
+  //if still left with multiple results means that reporting twice elimiate the one with sizes arr
+  if (bestVials.length > 1) {
+    bestVials = bestVials.filter((vial) => {
+      return !vial.hasOwnProperty('sizes');
+    });
+  }
+
+  return bestVials;
 
   //
   // let minWasteVial = comboObjs[0]; // start min at first vial
