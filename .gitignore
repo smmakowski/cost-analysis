@@ -10,10 +10,11 @@ package-lock.json
 *.txt
 
 #source files
+/workingDocuments
 *.numbers
 *.xls
 *.xlsx
 *.pdf
 
-#werid files i dont understand
-.swp
+# weird files i dont understand
+*.swp
