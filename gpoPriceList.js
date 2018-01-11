@@ -27,15 +27,13 @@ module.exports.data = [
   {name: 'remicade', sizePrices: ['100/1167.24']}, // inflixumab NOTE DONE
   {name: 'camptosar', sizePrices: ['40/6.86', '100/12.21', '300/74.25']}, // irinotecan NOTE DONE
   {name: 'leucovorin', sizePrices: ['50/5.32', '100/11.00', '200/16.03', '350/15.97', '500/56.84']}, // no brand NOTE DONE
-
   {name: 'methotrexate (pf)', sizePrices: ['50/2.28', '250/5.47', '1000/27.32']}, // not brand NOTE DONE, but may need to refactor in case not found
   // ALSO NOTE: (pf) means preservative-free --- only target the ones that have preservative free next to it
-
   {name: 'mutamycin', sizePrices: ['5/209.00', '20/544.00', '40/1087.75']}, // Mitomycin NOTE DONE; 10mg Does not actually exist for GPO
   {name: 'opdivo', sizePrices: ['40/1033.33', '100/2583.33']}, // nivolumab NOTE DONE
   {name: 'oxaliplatin', sizePrices: ['50/16.94', '100/32.74']}, // no brand listed NOTE DONE
   {name: 'abraxane', sizePrices: ['100/1257.23']}, // Paclitaxel- protein bound NOTE DONE
-  {name: 'almita', sizePrices: ['100/666.52', '500/3332.60']}, // pemetrexed NOTE DONE
+  {name: 'alimta', sizePrices: ['100/666.52', '500/3332.60']}, // pemetrexed NOTE DONE
   {name: 'vectibix', sizePrices: ['100/1153.97', '400/4731.29']}, // panitumumab NOTE DONE
   {name: 'oncaspar', sizePrices: ['3750/14544.54']}, // pegaspargase NOTE DONE
   {name: 'fotolyn', sizePrices: ['20/5047.97', '40/10095.94']}, // pralatrexate NOTE DONE
@@ -45,7 +43,6 @@ module.exports.data = [
   {name: 'hycamtin', sizePrices: ['4/39.20']}, // topotecan NOTE DONE
   {name: 'herceptin', sizePrices: ['150/1513.03']}, // trastuzumab NOTE DONE
   {name: 'vincasar', sizePrices: ['1/5.38', '2/10.00']}, //vincristine NOTE DONE
-
   {name: 'navelbine', sizePrices: ['10/9.80', '50/37.24']}, // vinorelbine NOTE DONE
   {name: 'zometa', sizePrices: ['4/43.89', '5/111.60']} // zolendric acid NOTE DONE
 ]

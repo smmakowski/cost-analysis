@@ -17,7 +17,7 @@ module.exports.data = [
   {name: 'cytrabine', sizePrices: ['100/4.34', '2000/10.21']}, // only generic NOTE: DONE "20,000" is actually 2000
 
 
-  {name: 'dtic-dome', sizePrices: ['200/5.16']}, // dacarbazine NOTE DONE
+  {name: 'dtic-dome', sizePrices: ['200/5.16']}, // dacarbazine NOTE DONE; says 'dtic-dome in pdf'
   {name: 'taxotere', sizePrices: ['20/18.13', '80/51.75', '160/151.99']}, // doclatexel NOTE DONE
   {name: 'adriamycin', sizePrices: ['10/2.49', '20/4.34', '50/288.69']}, // doxorubicin NOTE DONE
   {name: 'doxil', sizePrices: ['20/766.15', '50/1679.60']},// doxorubicin liposomal NOTE DONE
@@ -38,7 +38,7 @@ module.exports.data = [
   {name: 'opdivo', sizePrices: ['40/761.70', '100/1903.80']}, // nivolumab NOTE DONE
   {name: 'oxaliplatin', sizePrices: ['50/9.26', '100/32.17']}, // no brand listed NOTE DONE
   {name: 'abraxane', sizePrices: ['100/722.92']}, // Paclitaxel- protein bound NOTE DONE
-  {name: 'almita', sizePrices: ['100/380.16', '500/1765.44']}, // pemetrexed NOTE DONE
+  {name: 'alimta', sizePrices: ['100/380.16', '500/1765.44']}, // pemetrexed NOTE DONE
   {name: 'vectibix', sizePrices: ['100/719.48', '400/2875.81']}, // panitumumab NOTE DONE
   {name: 'oncaspar', sizePrices: ['3750/0.05']}, // pegaspargase NOTE DONE
   {name: 'fotolyn', sizePrices: ['20/2447.22', '40/4894.44']}, // pralatrexate NOTE DONE

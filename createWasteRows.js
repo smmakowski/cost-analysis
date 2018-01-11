@@ -76,9 +76,9 @@ function processData(data) {
 
   rows.forEach((row, i) => { // for each row
     line++;
-    console.log('~~~LINE' + line +'~~~');
+    //console.log('~~~LINE' + line +'~~~');
     if (i === 0) {
-      console.log('HEADER ROW');
+      //console.log('HEADER ROW');
       return
     }
     row = row.slice(0, row.length - 4); // row is now without extra cols
@@ -88,7 +88,8 @@ function processData(data) {
     let targetDose = row.slice(lastComma); // get only dose
 
     if (targetDose.match(/(\d+\/\d+\/\d+)/) || targetDose === '') {
-      console.log('NO TARGET DOSE IS PROVIDED');
+      console.log('~~~LINE' + line +'~~~');
+      console.log('NO TARGET DOSE IS PROVIDED For row: {' + row + '}');
       results += ',,\n';
       return;
     } else {
@@ -101,7 +102,7 @@ function processData(data) {
     // console.log('THE IDX FOR DRUG IN PRICES WAS' + drugIdx);
 
     if (drugIdx !== -1) { // if found
-      console.log('THE DRUG NAME WAS = ' + drugPrices.data[drugIdx]['name']);
+      //console.log('THE DRUG NAME WAS = ' + drugPrices.data[drugIdx]['name']);
       let drugFound = drugPrices.data[drugIdx]; // get curr drug with prices
       let vialSizes = drugFound.sizePrices.map((item) => { // create array of vial sizes
         return calcWaste.createVialObject(item, targetDose);
@@ -119,7 +120,7 @@ function processData(data) {
         let pricePerMg;
         if (minWasteVial.waste === 0) {
           pricePerMg = 0;
-          console.log('THERE IS NO WASTE GENERATED');
+          //console.log('THERE IS NO WASTE GENERATED');
 
         } else if (minWasteVial['sizes']) {
           pricePerMg = 'MultipleSizes! Find Last Size'
@@ -148,6 +149,7 @@ function processData(data) {
 
         results += resultString;
       } else {
+        console.log('~~~LINE' + line +'~~~');
         console.log('LEN of Min was array is=' + minWasteCost.length);
         minWasteCost.forEach((vial) => {
           console.log(vial);
@@ -155,7 +157,8 @@ function processData(data) {
       }
       // compareWaste(vialSizes, targetDose); // this is what we want to do with the data in the end
     } else {  // else add empty row to results
-      console.log('DRUG NOT FOUND');
+      //console.log('~~~LINE' + line +'~~~');
+      //console.log('DRUG NOT FOUND in row: {' + row + '}');
       results += ',,\n';
       return; //move on
     }
@@ -166,7 +169,7 @@ function processData(data) {
 }
 
 function findPriceInStrArrWithSize(arr, price) {
-  console.log('SEARCHING FOR ' + price + 'IN ARRAY' + arr);
+  //console.log('SEARCHING FOR ' + price + 'IN ARRAY' + arr);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].indexOf(price) === 0) { // if the price is in the string at beginning
       let sizePriceSplit = arr[i].split('/'); // split

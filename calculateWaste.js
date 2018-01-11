@@ -319,13 +319,13 @@ function compareWaste(vialSizes, targetDose) {
   // console.log('BEST VIALS AFTER  LEAST NUM OF VIALS USED =' + JSON.stringify(bestVials));
   bestVials = findCombosWithLeastTypesOfVialsUsed(bestVials);
   //if still left with multiple results means that reporting twice elimiate the one with sizes arr
-  if (bestVials.length > 1) {
-    bestVials = bestVials.filter((vial) => {
-      return !vial.hasOwnProperty('sizes');
-    });
-  }
+  // if (bestVials.length > 1) {
+  //   bestVials = bestVials.filter((vial) => {
+  //     return !vial.hasOwnProperty('sizes');
+  //   });
+  // }
 
-  return bestVials;
+  return [bestVials[0]]; // if there is still one left after this, then just return the 1st one
 
   //
   // let minWasteVial = comboObjs[0]; // start min at first vial
