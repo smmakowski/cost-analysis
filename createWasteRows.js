@@ -1,7 +1,23 @@
 const fs = require('fs');
-const drugPrices = require('./priceData.js');
 const calcWaste = require('./calculateWaste.js');
+const pricingEntity = process.argv[2].toLowerCase();
 
+let drugPrices;
+let pricingSuffix;
+
+if (pricingEntity ===  '340b') {
+  drugPrices = require('./340bPriceList.js');
+  pricingSuffix = '340b';
+  console.log('USING 340B PRICES...');
+} else if (pricingEntity === 'gpo') {
+  drugPrices = require('./gpoPriceList.js');
+  pricingSuffix = 'gpo';
+  console.log('USING GPO PRICES...');
+} else {
+  drugPrices = require('./priceData.js');
+  pricingSuffix = 'default';
+  console.log('USING DEFAULT/TEST PRICE LIST)...');
+}
 
 // createFileOfWasteRows(process.argv[2]);
 // createFileOfWasteRows(process.argv[2]);
@@ -24,15 +40,16 @@ const files = fs.readdirSync('./csv-base-files');
 files.forEach((file, i) => {
   if (i !== 0) {
     const path = './csv-base-files/' + file;
-    console.log('~~~~~~~~THE CURRENT FILE IS '+path +'~~~~~~~~~~~~~~~~~~~~~');
-    createFileOfWasteRows(path);
+    console.log('~~~~~~~~THE CURRENT FILE IS '+ path +'~~~~~~~~~~~~~~~~~~~~~');
+    createFileOfWasteRows(path, pricingSuffix);
   }
 });
-function createFileOfWasteRows(fileName) {
+
+function createFileOfWasteRows(fileName, pricingSuffix) {
   // read the file
   let data = fs.readFileSync(fileName, 'utf8');
   let results = processData(data);
-  fs.writeFileSync('./csv-result-files/' + fileName.slice(17, fileName.length - 4) + '-waste-columns.csv', results,'utf8');
+  fs.writeFileSync('./' +  pricingSuffix + '-csv-result-files/' + fileName.slice(17, fileName.length - 4) + '-' + pricingSuffix + '-waste-columns.csv', results,'utf8');
 
   /*// below is the async version
   fs.readFile(fileName, 'utf8', (err, data) => {

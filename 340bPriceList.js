@@ -31,7 +31,7 @@ module.exports.data = [
   {name: 'camptosar', sizePrices: ['40/7.49', '100/15.99', '300/55.50']}, // irinotecan NOTE DONE
   {name: 'leucovorin', sizePrices: ['50/4.90', '100/6.61', '200/12.06', '350/12.41', '500/36.34']}, // no brand NOTE DONE
 
-  {name: 'methotrexate (pf)', sizePrices: []}, // not brand NOTE DONE, but may need to refactor in case not found
+  {name: 'methotrexate (pf)', sizePrices: ['50/.80', '250/5.20', '1000/18.44']}, // not brand NOTE DONE, but may need to refactor in case not found
   // ALSO NOTE: (pf) means preservative-free --- only target the ones that have preservative free next to it
 
   {name: 'mutamycin', sizePrices: ['5/39.24', '10/122.40', '20/113.95', '40/237.07']}, // Mitomycin NOTE DONE
