@@ -1,22 +1,21 @@
 /*
-  Based off the 340b Price List Columnn in GPO 340b Price List 2.xsl
+  Based off the GPO Price List Columnn in GPO 340b Price List 2.xsl
 */
 module.exports.data = [
-  {name: 'orencia', sizePrices: ['250/345.34']}, // abatacept NOTE: DONE
-  {name: 'kadcycla', sizePrices: ['100/2175.22', '160/3483.89']}, // ado-trastuzumab NOTE: DONE
-  {name: 'recombinate', sizePrices: ['250/201.64', '500/403.78', '1000/797.36', '2000/1503.28']}, // antihemophilic factor NOTE DONE
-  {name: 'vidaza', sizePrices: ['100/203.95']}, // azacitidine NOTE DONE
-  {name: 'benlysta', sizePrices: ['120/363.11', '400/1206.76']}, // belimumab NOTE DONE
-  {name: 'avastin', sizePrices: ['100/536.49', '400/2145.58']}, //bevazicumab NOTE DONE
-  {name: 'velcade', sizePrices: ['3.5/845.51']}, // bortezomib NOTE DONE
-  {name: 'blenoxane', sizePrices: ['30/39.06']}, // bleomycin NOTE DONE
-  {name: 'kyprolis', sizePrices: ['30/729.50', '60/1314.29']}, // carfilzomib NOTE DONE
-  {name: 'erbitux', sizePrices: ['100/424.57', '200/855.14']}, // cetuximab NOTE DONE
+  {name: 'orencia', sizePrices: ['250/1046.25']}, // abatacept NOTE: DONE
+  {name: 'kadcycla', sizePrices: ['100/2943.75', '160/4710.00']}, // ado-trastuzumab NOTE: DONE; Acutally 4710.00 for 160mg
+  {name: 'recombinate', sizePrices: ['265/283.60', '309/330.68', '505/540.44', '957/1024.15', '1040/1112.98', '1120/1198.59', '1140/1220.00', '1540/1648.06', '1570/1680.17', '1650/1765.78', '2210/2365.08', '2220/2375.78']}, // antihemophilic factor NOTE DONE
+  {name: 'vidaza', sizePrices: ['100/154.55']}, // azacitidine NOTE DONE
+  {name: 'benlysta', sizePrices: ['120/504.25', '400/1680.77']}, // belimumab NOTE DONE
+  {name: 'avastin', sizePrices: ['100/777.50', '400/3110.00']}, //bevazicumab NOTE DONE
+  {name: 'velcade', sizePrices: ['3.5/1603.00']}, // bortezomib NOTE DONE
+  {name: 'blenoxane', sizePrices: ['30/64.03']}, // bleomycin NOTE DONE
+  {name: 'kyprolis', sizePrices: ['30/1074.38', '60/2148.75']}, // carfilzomib NOTE DONE
+  {name: 'erbitux', sizePrices: ['100/606.52', '200/1213.04']}, // cetuximab NOTE DONE
+  {name: 'cytoxan', sizePrices: ['500/209.26', '1000/418.52', '2000/837.94']}, // cyclophosphamide NOTE: DONE; coverted to mg for gram vials
+  //TODO EVERYTHING BELOW THIS LINE
 
-  {name: 'cytoxan', sizePrices: ['500/178.46', '1000/344.63', '2000/616.06']}, // cyclophosphamide NOTE: DONE; coverted to mg for gram vials
   {name: 'cytrabine', sizePrices: ['100/4.34', '2000/10.21']}, // only generic NOTE: DONE "20,000" is actually 2000
-
-
   {name: 'dtic-dome', sizePrices: ['200/5.16']}, // dacarbazine NOTE DONE
   {name: 'taxotere', sizePrices: ['20/18.13', '80/51.75', '160/151.99']}, // doclatexel NOTE DONE
   {name: 'adriamycin', sizePrices: ['10/2.49', '20/4.34', '50/288.69']}, // doxorubicin NOTE DONE
