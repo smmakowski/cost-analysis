@@ -31,7 +31,7 @@ module.exports.data = [
   {name: 'camptosar', sizePrices: ['40/7.49', '100/15.99', '300/55.50']}, // irinotecan NOTE DONE
   {name: 'leucovorin', sizePrices: ['50/4.90', '100/6.61', '200/12.06', '350/12.41', '500/36.34']}, // no brand NOTE DONE
 
-  {name: 'methotrexate (pf)', sizePrices: ['50/.80', '250/5.20', '1000/18.44']}, // not brand NOTE DONE, but may need to refactor in case not found
+  {name: 'methotrexate (pf)', sizePrices: ['50/0.80', '250/5.20', '1000/18.44']}, // not brand NOTE DONE, but may need to refactor in case not found
   // ALSO NOTE: (pf) means preservative-free --- only target the ones that have preservative free next to it
 
   {name: 'mutamycin', sizePrices: ['5/39.24', '10/122.40', '20/113.95', '40/237.07']}, // Mitomycin NOTE DONE
@@ -49,7 +49,5 @@ module.exports.data = [
   {name: 'herceptin', sizePrices: ['150/618.89']}, // trastuzumab NOTE DONE
   {name: 'vincasar', sizePrices: ['1/3.86', '2/7.71']}, //vincristine NOTE DONE
   {name: 'navelbine', sizePrices: ['10/7.14', '50/35.68']}, // vinorelbine NOTE DONE
-  {name: 'aranesp', sizePrices: ['25/71.36', '40/114.22', '60/171.32', '100/285.54', '200/57.07', '300/864.48']}, // TODO left as micrograms; darbepoetin alfa
-  {name: 'taxotere', sizePrices: ['10/13.75']}, // TODO DOCEtaxel; 20mg has 'range' so not added yet
-  {name: 'zometa', sizePrices: ['4/704.98', '5/39.11']} // zolendric acid NOTE DONE
+  {name: 'zometa', sizePrices: ['4/65.21', '5/39.11']} // zolendric acid NOTE DONE
 ]
