@@ -1,6 +1,11 @@
+/*
+  MAIN PROGRAM FOR GENERATING COMBINATIONS
+*/
 const fs = require('fs');
 const calcWaste = require('./calculateWaste.js');
 const pricingEntity = process.argv[2].toLowerCase();
+
+let notFoundDrugs = []; // to determine drugs not found
 
 let drugPrices;
 let pricingSuffix;
@@ -45,6 +50,17 @@ files.forEach((file, i) => {
   }
 });
 
+
+console.log('Drugs not found are: ');
+notFoundDrugs.forEach((drug) => {
+  console.log(drug);
+});
+
+
+/*
+  FUNCTION DECLARATIONS
+*/
+
 function createFileOfWasteRows(fileName, pricingSuffix) {
   // read the file
   let data = fs.readFileSync(fileName, 'utf8');
@@ -72,6 +88,7 @@ function createFileOfWasteRows(fileName, pricingSuffix) {
 function processData(data) {
   let line = 0;
   let results = ''; // start resulst string
+
   rows = data.split('\n'); // split into row
 
   rows.forEach((row, i) => { // for each row
@@ -88,8 +105,8 @@ function processData(data) {
     let targetDose = row.slice(lastComma); // get only dose
 
     if (targetDose.match(/(\d+\/\d+\/\d+)/) || targetDose === '') {
-      console.log('~~~LINE' + line +'~~~');
-      console.log('NO TARGET DOSE IS PROVIDED For row: {' + row + '}');
+      //console.log('~~~LINE' + line +'~~~');
+      //console.log('NO TARGET DOSE IS PROVIDED For row: {' + row + '}');
       results += ',,\n';
       return;
     } else {
@@ -123,7 +140,7 @@ function processData(data) {
           //console.log('THERE IS NO WASTE GENERATED');
 
         } else if (minWasteVial['sizes']) {
-          pricePerMg = 'MultipleSizes! Find Last Size'
+          //pricePerMg = 'MultipleSizes! Find Last Size'
           let smallestSize = Math.min(...minWasteVial['sizes']);
           let priceOfSmallestSize = findPriceInStrArrWithSize(drugFound.sizePrices, smallestSize);
           pricePerMg = priceOfSmallestSize / smallestSize;
@@ -149,8 +166,8 @@ function processData(data) {
 
         results += resultString;
       } else {
-        console.log('~~~LINE' + line +'~~~');
-        console.log('LEN of Min was array is=' + minWasteCost.length);
+        //console.log('~~~LINE' + line +'~~~');
+        //console.log('LEN of Min was array is=' + minWasteCost.length);
         minWasteCost.forEach((vial) => {
           console.log(vial);
         })
@@ -159,6 +176,10 @@ function processData(data) {
     } else {  // else add empty row to results
       //console.log('~~~LINE' + line +'~~~');
       //console.log('DRUG NOT FOUND in row: {' + row + '}');
+      let notFoundName = getDrugNameForNotListed(row);
+      if (notFoundDrugs.indexOf(notFoundName) === -1) {
+        notFoundDrugs.push(notFoundName);
+      }
       results += ',,\n';
       return; //move on
     }
@@ -187,4 +208,11 @@ function findDrug(priceList, row) {
     }
   }
   return -1;
+}
+
+function getDrugNameForNotListed(line) {
+  let firstCommaIdx = line.indexOf(',');
+  let firstClosingParen = line.indexOf(')');
+
+  return line.slice(firstCommaIdx + 1, firstClosingParen + 1);
 }
