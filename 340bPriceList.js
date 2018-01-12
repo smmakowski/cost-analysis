@@ -12,7 +12,10 @@ module.exports.data = [
   {name: 'benlysta', sizePrices: ['120/363.11', '400/1206.76']}, // belimumab NOTE DONE
   {name: 'avastin', sizePrices: ['100/536.49', '400/2145.58']}, //bevazicumab NOTE DONE
   {name: 'velcade', sizePrices: ['3.5/845.51']}, // bortezomib NOTE DONE
+
   {name: 'blenoxane', sizePrices: ['30/39.06']}, // bleomycin NOTE DONE
+  {name: 'bleocin', sizePrices: ['30/39.06']}, // bleomycin NOTE DONE; I was advised to use the same pricing as blenoxane
+
   {name: 'kyprolis', sizePrices: ['30/729.50', '60/1314.29']}, // carfilzomib NOTE DONE
   {name: 'erbitux', sizePrices: ['100/424.57', '200/855.14']}, // cetuximab NOTE DONE
 
