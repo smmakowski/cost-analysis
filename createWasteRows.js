@@ -161,7 +161,7 @@ function processData(data) {
 
         }
 
-        let resultString = (Math.round(minWasteVial.waste * 100) / 100) + ',' + (Math.round(pricePerMg * 100) / 100) +
+        let resultString = (Math.round(minWasteVial.waste * 100) / 100) + ',' + (Math.round(pricePerMg * 10000) / 10000) +
         ',' + (Math.round(minWasteVial.wasteCost * 100) / 100) + '\n';
 
         results += resultString;
