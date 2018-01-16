@@ -20,7 +20,7 @@ module.exports.data = [
   {name: 'erbitux', sizePrices: ['100/606.52', '200/1213.04']}, // cetuximab NOTE DONE
   {name: 'cytoxan', sizePrices: ['500/209.26', '1000/418.52', '2000/837.94']}, // cyclophosphamide NOTE: DONE; coverted to mg for gram vials
   {name: 'cytarabine', sizePrices: ['100/23.35', '2000/14.92']}, // only generic NOTE: DONE "20,000" is actually 2000
-  {name: 'dtic', sizePrices: ['20t0/8.82']}, // dacarbazine NOTE DONE
+  {name: 'dtic', sizePrices: ['200/8.82']}, // dacarbazine NOTE DONE
   {name: 'taxotere', sizePrices: ['20/24.25', '80/97.00', '160/202.83']}, // doclatexel NOTE DONE
   {name: 'adriamycin', sizePrices: ['10/6.45', '20/12.91', '50/14.95']}, // doxorubicin NOTE DONE
   {name: 'doxil', sizePrices: ['20/646.05', '50/1612.63']},// doxorubicin liposomal NOTE DONE

@@ -13,15 +13,15 @@ let pricingSuffix;
 if (pricingEntity ===  '340b') {
   drugPrices = require('./340bPriceList.js');
   pricingSuffix = '340b';
-  console.log('USING 340B PRICES...');
+  //console.log('USING 340B PRICES...');
 } else if (pricingEntity === 'gpo') {
   drugPrices = require('./gpoPriceList.js');
   pricingSuffix = 'gpo';
-  console.log('USING GPO PRICES...');
+  //console.log('USING GPO PRICES...');
 } else {
   drugPrices = require('./priceData.js');
   pricingSuffix = 'default';
-  console.log('USING DEFAULT/TEST PRICE LIST)...');
+  //console.log('USING DEFAULT/TEST PRICE LIST)...');
 }
 
 // createFileOfWasteRows(process.argv[2]);
@@ -51,10 +51,10 @@ files.forEach((file, i) => {
 });
 
 
-console.log('Drugs not found are: ');
-notFoundDrugs.forEach((drug) => {
-  console.log(drug);
-});
+// console.log('Drugs not found are: ');
+// notFoundDrugs.forEach((drug) => {
+//   console.log(drug);
+// });
 
 
 /*
@@ -93,10 +93,10 @@ function processData(data) {
 
   rows.forEach((row, i) => { // for each row
     line++;
-    //console.log('~~~LINE' + line +'~~~');
+    console.log('~~~LINE' + line +'~~~');
     if (i === 0) {
       //console.log('HEADER ROW');
-      return
+      return;
     }
     row = row.slice(0, row.length - 4); // row is now without extra cols
     // console.log('row is =' + row)
@@ -105,12 +105,12 @@ function processData(data) {
     let targetDose = row.slice(lastComma); // get only dose
 
     if (targetDose.match(/(\d+\/\d+\/\d+)/) || targetDose === '') {
-      //console.log('~~~LINE' + line +'~~~');
+      // console.log('~~~LINE' + line +'~~~');
       //console.log('NO TARGET DOSE IS PROVIDED For row: {' + row + '}');
       results += ',,\n';
       return;
     } else {
-      targetDose = parseInt(targetDose, 10);
+      targetDose = targetDose * 1.0; // change from parse int to actual dose
     }
       //console.log('TARGETDOSE = ' + targetDose +', ' + 'and is =' + typeof targetDose);
     // search for drug name in row from drug priceObjs arrays
@@ -129,10 +129,10 @@ function processData(data) {
 
       if (minWasteCost.length === 1) { // if there is only one option!!!!
         let minWasteVial = minWasteCost[0]; // set
-        // //console.log('~~~MINWASTE VIAL~~~');
-        // for (key in minWasteVial) {
-        //   console.log(key + ': ' + minWasteVial[key]);
-        // }
+        //console.log('~~~MINWASTE VIAL~~~');
+        for (key in minWasteVial) {
+          console.log(key + ': ' + minWasteVial[key]);
+        }
 
         let pricePerMg;
         if (minWasteVial.waste === 0) {
@@ -161,7 +161,7 @@ function processData(data) {
 
         }
 
-        let resultString = minWasteVial.waste + ',' + (Math.round(pricePerMg * 100) / 100) +
+        let resultString = (Math.round(minWasteVial.waste * 100) / 100) + ',' + (Math.round(pricePerMg * 100) / 100) +
         ',' + (Math.round(minWasteVial.wasteCost * 100) / 100) + '\n';
 
         results += resultString;

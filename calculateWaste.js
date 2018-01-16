@@ -48,8 +48,8 @@
 function createVialObject(sizePriceString, targetDose) {
   const values = sizePriceString.split("/");
   let vial = {};
-  vial.size = values[0] * 1;
-  vial.price = values[1] * 1;
+  vial.size = values[0] * 1.0;
+  vial.price = values[1] * 1.0;
 
   // fill bottle
   let totalUsed = 0;
@@ -308,16 +308,17 @@ function compareWaste(vialSizes, targetDose) {
     return createVialCombinationObject(vialSizes, combo, targetDose);
   });
   comboObjs = comboObjs.concat(vialSizes);
-
-  //console.log('ALL THE COMBOS = ', comboObjs);
+  console.log('ALL THE COMBOS = ', comboObjs);
 
   let bestVials = findVialsWithMinWasteCost(comboObjs);
-  // console.log('BEST VIALS AFTER MINWASTE COST =' + JSON.stringify(bestVials));
+  //console.log('BEST VIALS AFTER MINWASTE COST =' + JSON.stringify(bestVials));
   bestVials = findVialsWithMinWaste(bestVials);
-  // console.log('BEST VIALS AFTER MIN TOTAL WASRE =' + JSON.stringify(bestVials));
+  //console.log('BEST VIALS AFTER MIN TOTAL WASRE =' + JSON.stringify(bestVials));
   bestVials = findCombosWithLeastVialsUsed(bestVials);
-  // console.log('BEST VIALS AFTER  LEAST NUM OF VIALS USED =' + JSON.stringify(bestVials));
+  //console.log('BEST VIALS AFTER  LEAST NUM OF VIALS USED =' + JSON.stringify(bestVials));
   bestVials = findCombosWithLeastTypesOfVialsUsed(bestVials);
+
+
   //if still left with multiple results means that reporting twice elimiate the one with sizes arr
   // if (bestVials.length > 1) {
   //   bestVials = bestVials.filter((vial) => {
