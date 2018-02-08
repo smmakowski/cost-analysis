@@ -6,7 +6,7 @@ const calcWaste = require('./calculateWaste.js');
 const pricingEntity = process.argv[2].toLowerCase();
 
 let notFoundDrugs = []; // to determine drugs not found
-
+let totalVialsForYear = 0;
 let drugPrices;
 let pricingSuffix;
 
@@ -45,7 +45,7 @@ const files = fs.readdirSync('./csv-base-files');
 files.forEach((file, i) => {
   if (i !== 0) {
     const path = './csv-base-files/' + file;
-    console.log('~~~~~~~~THE CURRENT FILE IS '+ path +'~~~~~~~~~~~~~~~~~~~~~');
+    //console.log('~~~~~~~~THE CURRENT FILE IS '+ path +'~~~~~~~~~~~~~~~~~~~~~');
     createFileOfWasteRows(path, pricingSuffix);
   }
 });
@@ -55,7 +55,7 @@ files.forEach((file, i) => {
 // notFoundDrugs.forEach((drug) => {
 //   console.log(drug);
 // });
-
+console.log('ALL THE  VIALS USED = ', totalVialsForYear);
 
 /*
   FUNCTION DECLARATIONS
@@ -93,7 +93,7 @@ function processData(data) {
 
   rows.forEach((row, i) => { // for each row
     line++;
-    console.log('~~~LINE' + line +'~~~');
+    //console.log('~~~LINE' + line +'~~~');
     if (i === 0) {
       //console.log('HEADER ROW');
       return;
@@ -128,10 +128,11 @@ function processData(data) {
       let minWasteCost = calcWaste.compareWaste(vialSizes, targetDose); // get array of comapise
 
       if (minWasteCost.length === 1) { // if there is only one option!!!!
+
         let minWasteVial = minWasteCost[0]; // set
-        //console.log('~~~MINWASTE VIAL~~~');
+        totalVialsForYear += minWasteVial.vialsUsed;
         for (key in minWasteVial) {
-          console.log(key + ': ' + minWasteVial[key]);
+          //console.log(key + ': ' + minWasteVial[key]);
         }
 
         let pricePerMg;

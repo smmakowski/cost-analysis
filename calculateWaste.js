@@ -308,7 +308,7 @@ function compareWaste(vialSizes, targetDose) {
     return createVialCombinationObject(vialSizes, combo, targetDose);
   });
   comboObjs = comboObjs.concat(vialSizes);
-  console.log('ALL THE COMBOS = ', comboObjs);
+  //console.log('ALL THE COMBOS = ', comboObjs);
 
   let bestVials = findVialsWithMinWasteCost(comboObjs);
   //console.log('BEST VIALS AFTER MINWASTE COST =' + JSON.stringify(bestVials));
@@ -387,42 +387,10 @@ function compareWaste(vialSizes, targetDose) {
 module.exports = {
   createVialObject,
   compareWaste,
+  generateCombinations,
+  createVialCombinationObject,
+  findVialsWithMinWasteCost,
+  findVialsWithMinWaste,
+  findCombosWithLeastVialsUsed,
+  findCombosWithLeastTypesOfVialsUsed
 }
-// notes for optimal size algorithm (for Refactor)
-// AWAIT JADES advice for
-
-// when declaring vial sizes Array
-  // mapp to array of objects, where in call back (item)
-    // split item  on '/' to create arr
-    // return object with keys
-      // amount: arr[0], parsed to parseInt
-      // remainder: targetsize % amount
-      // total spent:
-      // toal wasted
-
-// in function
-  // iterate throught obj Array to find lowest amount of waste
-  // filter by similar waste levels
-  // if filtered array has more than one item
-    // iterate to figure out which one has least amount of money waste
-    // filter again for similar monetary waste levels
-      // if the seond filtered array has more than element
-        // iterate through all, and print all infomraiton for all options
-      // else
-        // print infomation
-  // else
-    // print information
-
-
-/* ALTERNATIVE IDEAS FOR ACCOMPLISHING THIS
-- instead of passing info each time for a single run, create a .csv with drug names, and vials,
-- create logic to parse csv, and use node's fs to run the analysis on the cv file, and freate logic
-
-*/
-
-// other notes
-// - for money it may be neccesary to create a money class for to avoid minor errors in clauclation
-// - alternatively, there's probably an npm package
-
-
-// combinations of vials

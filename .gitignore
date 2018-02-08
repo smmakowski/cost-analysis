@@ -16,5 +16,9 @@ package-lock.json
 *.xlsx
 *.pdf
 
+
 # weird files i dont understand
 *.swp
+
+# code coverage
+.nyc_output/
