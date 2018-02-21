@@ -7,6 +7,7 @@ const pricingEntity = process.argv[2].toLowerCase();
 
 let notFoundDrugs = []; // to determine drugs not found
 let totalVialsForYear = 0;
+//let vialCountColumn = '';
 let drugPrices;
 let pricingSuffix;
 
@@ -42,6 +43,7 @@ if (pricingEntity ===  '340b') {
 //   console.log(data);
 // });
 const files = fs.readdirSync('./csv-base-files');
+// creates the result files
 files.forEach((file, i) => {
   if (i !== 0) {
     const path = './csv-base-files/' + file;
@@ -50,6 +52,7 @@ files.forEach((file, i) => {
   }
 });
 
+//fs.writeFileSync('./countColumn.csv', vialCountColumn, 'utf8');
 
 // console.log('Drugs not found are: ');
 // notFoundDrugs.forEach((drug) => {
@@ -105,8 +108,8 @@ function processData(data) {
     let targetDose = row.slice(lastComma); // get only dose
 
     if (targetDose.match(/(\d+\/\d+\/\d+)/) || targetDose === '') {
-      // console.log('~~~LINE' + line +'~~~');
-      //console.log('NO TARGET DOSE IS PROVIDED For row: {' + row + '}');
+      console.log('~~~LINE' + line +'~~~');
+      console.log('NO TARGET DOSE IS PROVIDED For row: {' + row + '}');
       results += ',,\n';
       return;
     } else {
@@ -130,10 +133,11 @@ function processData(data) {
       if (minWasteCost.length === 1) { // if there is only one option!!!!
 
         let minWasteVial = minWasteCost[0]; // set
-        totalVialsForYear += minWasteVial.vialsUsed;
-        for (key in minWasteVial) {
-          //console.log(key + ': ' + minWasteVial[key]);
-        }
+        //totalVialsForYear += minWasteVial.vialsUsed;
+        // vialCountColumn += minWasteVial.vialsUsed + '\n';
+        // for (key in minWasteVial) {
+        //   //console.log(key + ': ' + minWasteVial[key]);
+        // }
 
         let pricePerMg;
         if (minWasteVial.waste === 0) {
@@ -163,20 +167,20 @@ function processData(data) {
         }
 
         let resultString = (Math.round(minWasteVial.waste * 100) / 100) + ',' + (Math.round(pricePerMg * 10000) / 10000) +
-        ',' + (Math.round(minWasteVial.wasteCost * 100) / 100) + '\n';
+        ',' + (Math.round(minWasteVial.wasteCost * 100) / 100) + ',' + minWasteVial.vialsUsed + '\n'; // added additonal column for vials usedls; Just kidding
 
         results += resultString;
       } else {
-        //console.log('~~~LINE' + line +'~~~');
-        //console.log('LEN of Min was array is=' + minWasteCost.length);
+        console.log('~~~LINE' + line +'~~~');
+        console.log('LEN of Min was array is=' + minWasteCost.length);
         minWasteCost.forEach((vial) => {
           console.log(vial);
         })
       }
       // compareWaste(vialSizes, targetDose); // this is what we want to do with the data in the end
     } else {  // else add empty row to results
-      //console.log('~~~LINE' + line +'~~~');
-      //console.log('DRUG NOT FOUND in row: {' + row + '}');
+      console.log('~~~LINE' + line +'~~~');
+      console.log('DRUG NOT FOUND in row: {' + row + '}');
       let notFoundName = getDrugNameForNotListed(row);
       if (notFoundDrugs.indexOf(notFoundName) === -1) {
         notFoundDrugs.push(notFoundName);
