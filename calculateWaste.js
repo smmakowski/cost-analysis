@@ -62,13 +62,19 @@ function createVialObject(sizePriceString, targetDose) {
 }
 
 /*
-  generateCombos
+  <<<< THE generateCombinations() FUNCTION >>>>
+
+  generateCombos() is a function used to create multiple objects containing waste information. While the above
+  function createVialObject() creates a single object that assumes only one vial size is used to achieve a
+  target dose, this function creates objects that use multiple sizes.
+
+
 */
 
 function generateCombinations(vialCombinations, targetDose) {
-  // declare combo array for return;
-  let combinations = [];
-  // sort vials highest to lowest
+  let combinations = []; // declare empty array to hold combinations for output
+
+  // sort vialcombinations according to size in  descending order
   const sortedVials = vialCombinations.sort((vial1, vial2) => {
     return vial1.size - vial2.size;
   }).reverse();
