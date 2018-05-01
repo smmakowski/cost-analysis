@@ -68,7 +68,12 @@ function createVialObject(sizePriceString, targetDose) {
   function createVialObject() creates a single object that assumes only one vial size is used to achieve a
   target dose, this function creates objects that use multiple sizes.
 
+  This function is called within the processData() function in createWasteRows.js after row data has been parsed.
+  The function takes two arguments: vialCombinations (an array of vial objects created from running the createVialObject()
+  function for each vial/price string for a given drug) and targetDose(the target dose for a given row in a .CSV file).
 
+  The function begins by taking the vialCombinations array and sorting it in descending order using the built-in .sort()
+  method for Arrays.
 */
 
 function generateCombinations(vialCombinations, targetDose) {
@@ -154,7 +159,9 @@ function generateCombinations(vialCombinations, targetDose) {
   return combinations; // returns array of combinations to be parsed
 }
 
-
+/*
+  createVialCombinationObject() 
+*/
 function createVialCombinationObject(sizesArr, combo, targetDose) {
     let comboObj = {};
     comboObj.sizes = [];
