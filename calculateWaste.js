@@ -30,7 +30,7 @@
   'sizePriceString' is passed in from (*PriceList.js) when a drug is found during .CSV analysis in
   in createWasteRows.js.
 */
-
+ 
 function createVialObject(sizePriceString, targetDose) {
   const values = sizePriceString.split("/"); // splits a price string into a tuple [size, price]
   // NOTE a tuple is an array (basically an ordered list), where each position has a meaning
